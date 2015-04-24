@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>CHO Display Now</title>
+</head>
+<body>
+<table>
+ <tr th:each="cho : ${CHOs}">
+      <td th:text="${cho.title}"></td>
+      <td th:text="${cho.date}"></td>
+      <td th:text="${cho.medium}"></td>
+</tr>
+</table>
+</body>
+</html>    
