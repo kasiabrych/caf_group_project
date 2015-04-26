@@ -1,11 +1,37 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Hello</title>
+<head lang="en">
+<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" />
+<link type="text/css" rel="stylesheet" href="/css/bootstrap-theme.min.css" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>HELLO</title>
 </head>
 <body>
-<p th:text="${message}"></p>
-<p th:text="${now}"></p>
+<div class="container">
+  <div class="jumbotron">
+    <h1>Cooper-Hewitt Interactive Museum</h1>
+    <p>Interact with Cultural Heritage Objects</p> 
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <h3>Column 1</h3>
+      <p>Bootstrap layout</p>
+      <p>to be determined</p>
+    </div>
+    <div class="col-sm-4">
+      <h3>Column 2</h3>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
+    </div>
+    <div class="col-sm-4">
+      <h3>Column 3</h3> 
+      <p th:text="${message}"></p>
+      <p th:text="${now}"></p>
+      <p></p>
+      <p></p>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
