@@ -16,7 +16,7 @@ public class HelloController {
 	 @RequestMapping(value={"/","/home"}, method = RequestMethod.GET)
 		public String showHomePage(ModelMap model) { 
 			Date date = new java.util.Date();		
-			model.addAttribute("message", "This is TheHits home page.");
+			model.addAttribute("message", "This is Cooper-Hewit Interactive home page.");
 			model.addAttribute("now", date);
 			return "hello";
 		} 	
