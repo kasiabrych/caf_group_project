@@ -14,7 +14,9 @@ import ie.cit.caf.repository.ParticipationRepository;
 import ie.cit.caf.repository.RoleRepository;
 import ie.cit.caf.rowmapper.CHORowMapper;
 import ie.cit.caf.service.CHObjectService;
+import ie.cit.caf.service.ParticipantService;
 import ie.cit.caf.service.ParticipationService;
+import ie.cit.caf.service.RoleService;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -56,9 +58,13 @@ public class GroupProjectApplication implements CommandLineRunner{
 	@Autowired
 	RoleRepository roleRepository; 
 	@Autowired
+	RoleService roleService; 
+	@Autowired
 	ImageRepository imageRepository; 
 	@Autowired 
 	ParticipantRepository participantRepository; 
+	@Autowired 
+	ParticipantService participantService; 
 	@Autowired 
 	ParticipationRepository participationRepository; 
 	@Autowired 
@@ -96,10 +102,14 @@ public class GroupProjectApplication implements CommandLineRunner{
 //			saveAllPart(allPart);
 			Role role = p.getRole(); 
 //			if (participant.getParticipant_id() ==0); 
-			participantRepository.saveInsert(participant);
+			//participantRepository.saveInsert(participant);
+			//populating the table using the service layer
+			participantService.save(participant); 
 
 //			if (role.getRole_no() ==0)
-			roleRepository.save(role); 
+			//roleRepository.save(role); 
+			//populating the table using service layer
+			roleService.save(role); 
 			//populating the object_participant_role table using service layer
 			participationService.saveParticipation(cho, participant, role); 
 			
