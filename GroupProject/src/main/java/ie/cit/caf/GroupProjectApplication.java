@@ -7,6 +7,7 @@ import ie.cit.caf.domain.Participant;
 import ie.cit.caf.domain.Participation;
 import ie.cit.caf.domain.Role;
 import ie.cit.caf.fileFinder.FileFinder;
+import ie.cit.caf.jparepo.ChoJpaRepo;
 import ie.cit.caf.repository.CHORepository;
 import ie.cit.caf.repository.ImageRepository;
 import ie.cit.caf.repository.ParticipantRepository;
@@ -49,6 +50,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Import(DefaultConfig.class)
 public class GroupProjectApplication implements CommandLineRunner{
 	
+	@Autowired
+	ChoJpaRepo choJpaRepo; 
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	@Autowired
@@ -125,6 +128,8 @@ public class GroupProjectApplication implements CommandLineRunner{
 		}
 		 
 		}
+		//calling jpaExample to try out jpa
+		jpaExample(); 
 		//the code below was meant to ensure that a participant was added only once, 
 		//it does not work
 		//saveAllPart(allPart);
@@ -205,6 +210,14 @@ public class GroupProjectApplication implements CommandLineRunner{
 		System.out.println("CHO added"); 
 		System.out.println(cho2.toString());
 		
+	}
+	public void jpaExample(){
+		
+		long count = choJpaRepo.count(); 
+		System.out.println("The count is "+ count);
+		
+		Iterable<ie.cit.caf.entity.CHObject> list = choJpaRepo.findAll();
+		System.out.println(list);
 	}
 
 	
