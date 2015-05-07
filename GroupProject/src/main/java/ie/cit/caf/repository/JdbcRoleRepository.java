@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
@@ -34,7 +35,7 @@ private JdbcTemplate jdbcTemplate;
 
 	@Override
 	public void save(Role role) {
-		if (role.getRole_no() ==0){
+		//if (role.getRole_no() ==0){
 //		String sql = "INSERT INTO roles (role_id, role_name, role_display_name, role_url) "
 //				+ "VALUES (?, ?, ?, ?)"; 
 //		jdbcTemplate.update(sql, 
@@ -52,7 +53,7 @@ private JdbcTemplate jdbcTemplate;
 		role.setRole_no(newId.intValue());
 		}
 		
-	}
+	//}
 
 	@Override
 	public void remove(Role role) {
@@ -65,6 +66,17 @@ private JdbcTemplate jdbcTemplate;
 	public List<Role> findAll() {
 			String sql = "SELECT * FROM roles";
 			return jdbcTemplate.query(sql, new RoleRowMapper());
+	}
+	
+	public Role checkIfExist(int id) {
+		try{
+			String sql = "SELECT * FROM roles WHERE role_id = ?";
+			Role role = jdbcTemplate.queryForObject(sql, new Object[] { id }, 
+					new RoleRowMapper());
+			return role; 	
+		} catch (EmptyResultDataAccessException e) {
+					return null;
+		}
 	}
 
 }

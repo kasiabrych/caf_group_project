@@ -20,10 +20,10 @@ public class JdbcParticipationRepository implements ParticipationRepository{
 	@Override
 	public void saveParticipation(CHObject cho, Participant p, Role r) {
 		// TODO Auto-generated method stub
-		String sql = "INSERT INTO object_participant_role (object_id, participant_id, role_id) "
+		String sql = "INSERT INTO object_participant_role (object_id, person_id, role_id) "
 				+ "VALUES (?, ?, ?)"; 
 		jdbcTemplate.update(sql, 
-				new Object [] {cho.getId(), p.getParticipant_id(), r.getRole_id()}); 
+				new Object [] {cho.getId(), p.getPerson_id(), r.getRole_id()}); 
 		
 	}
 

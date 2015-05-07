@@ -98,6 +98,13 @@ public class GroupProjectApplication implements CommandLineRunner{
 		 
 		for (Participation p : partList) {
 			Participant participant = p.getParticipant(); 
+			//Participant part2 = null; 
+			if (participantRepository.checkIfExist(Integer.parseInt(participant.getPerson_id()))==null){
+				participantService.save(participant);
+				//part2 = participantService.get(participant.getParticipant_id()); 
+				//part2=participant; 
+			}//else
+//				part2 = participantService.get(participant.getParticipant_id()); 
 //			checkIfExists(participant); 
 			//the above method was meant to check if participant has already been added, 
 			//it does not work
@@ -107,7 +114,7 @@ public class GroupProjectApplication implements CommandLineRunner{
 //			if (participant.getParticipant_id() ==0); 
 			//participantRepository.saveInsert(participant);
 			//populating the table using the service layer
-			participantService.save(participant); 
+			//participantService.save(participant); 
 
 //			if (role.getRole_no() ==0)
 			//roleRepository.save(role); 

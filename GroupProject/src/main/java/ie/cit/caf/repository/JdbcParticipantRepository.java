@@ -2,7 +2,9 @@ package ie.cit.caf.repository;
 
 
 import ie.cit.caf.domain.Participant;
+import ie.cit.caf.domain.Role;
 import ie.cit.caf.rowmapper.ParticipantRowMapper;
+import ie.cit.caf.rowmapper.RoleRowMapper;
 
 import java.util.HashMap;
 import java.util.List;
@@ -11,6 +13,7 @@ import java.util.Map;
 import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.stereotype.Repository;
@@ -68,10 +71,14 @@ public class JdbcParticipantRepository implements ParticipantRepository{
 
 	@Override
 	public Participant get(int id) {
+		try{
 		String sql = "SELECT * FROM participants WHERE participant_id = ?";
 		Participant part = jdbcTemplate.queryForObject(sql, new Object[] { id }, 
 				new ParticipantRowMapper());
 		return part; 	
+		}catch (EmptyResultDataAccessException e) {
+			return null;
+}
 	}
 
 	@Override
@@ -85,6 +92,16 @@ public class JdbcParticipantRepository implements ParticipantRepository{
 		String sql = "SELECT * FROM participants";
 		return jdbcTemplate.query(sql, new ParticipantRowMapper());
 
+	}
+	public Participant checkIfExist(int id) {
+		try{
+			String sql = "SELECT * FROM participants WHERE person_id = ?";
+			Participant part = jdbcTemplate.queryForObject(sql, new Object[] { id }, 
+					new ParticipantRowMapper());
+			return part; 	
+		} catch (EmptyResultDataAccessException e) {
+					return null;
+		}
 	}
 
 }

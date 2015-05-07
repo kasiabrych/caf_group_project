@@ -24,6 +24,7 @@ public class RoleServiceImpl implements RoleService{
 
 	@Override
 	public void save(Role role) {
+		if (roleRepo.checkIfExist(Integer.parseInt(role.getRole_id()))==null)
 		roleRepo.save(role);
 	}
 

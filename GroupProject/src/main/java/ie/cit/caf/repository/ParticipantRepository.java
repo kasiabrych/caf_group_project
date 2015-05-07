@@ -16,4 +16,6 @@ public interface ParticipantRepository {
 
 		public void saveInsert(Participant participant); 
 		
+		public Participant checkIfExist(int id); 
+		
 	}

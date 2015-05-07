@@ -25,6 +25,7 @@ public class ParticipantServiceImpl implements ParticipantService{
 
 	@Override
 	public void save(Participant participant) {
+		if (participantRepository.checkIfExist(Integer.parseInt(participant.getPerson_id()))==null)
 		participantRepository.save(participant);
 	}
 

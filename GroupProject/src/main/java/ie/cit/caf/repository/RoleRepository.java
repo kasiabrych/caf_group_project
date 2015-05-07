@@ -13,5 +13,7 @@ public interface RoleRepository {
 	public void remove (Role role); 
 	
 	public List<Role> findAll(); 
+	
+	public Role checkIfExist(int id); 
 
 }
