@@ -3,6 +3,7 @@ package ie.cit.caf;
 import ie.cit.caf.config.DefaultConfig;
 import ie.cit.caf.domain.CHObject;
 import ie.cit.caf.domain.Image;
+import ie.cit.caf.domain.Images;
 import ie.cit.caf.domain.Participant;
 import ie.cit.caf.domain.Participation;
 import ie.cit.caf.domain.Role;
@@ -10,6 +11,8 @@ import ie.cit.caf.fileFinder.FileFinder;
 import ie.cit.caf.jparepo.ChoJpaRepo;
 import ie.cit.caf.repository.CHORepository;
 import ie.cit.caf.repository.ImageRepository;
+import ie.cit.caf.repository.ImagesRepository;
+import ie.cit.caf.repository.JdbcImagesRepo;
 import ie.cit.caf.repository.ParticipantRepository;
 import ie.cit.caf.repository.ParticipationRepository;
 import ie.cit.caf.repository.RoleRepository;
@@ -64,6 +67,8 @@ public class GroupProjectApplication implements CommandLineRunner{
 	RoleService roleService; 
 	@Autowired
 	ImageRepository imageRepository; 
+	@Autowired
+	ImagesRepository imagesRepo; 
 	@Autowired 
 	ParticipantRepository participantRepository; 
 	@Autowired 
@@ -92,10 +97,11 @@ public class GroupProjectApplication implements CommandLineRunner{
 		for (Path f : files){
 		CHObject cho = new ObjectMapper().readValue(f.toFile(), CHObject.class); 
 		System.out.println("\n" + cho.toString()); 
+		
+	
 		//saving CHObjects using service layer
 		choService.save(cho);
 		List<Participation> partList = cho.getParticipations(); 
-		 
 		for (Participation p : partList) {
 			Participant participant = p.getParticipant(); 
 			//Participant part2 = null; 
@@ -125,14 +131,19 @@ public class GroupProjectApplication implements CommandLineRunner{
 			
 		
 		}
-		List<Map<String, Image>> imageList = cho.getImages(); 
-		for (Map<String, Image> map : imageList){
-			for (Map.Entry<String, Image> entry : map.entrySet()){
-				Image i = entry.getValue(); 
-				imageRepository.save(i);
-				imageRepository.linkImageToCho(i, cho); 
-			}
+		List<Images> imageList = cho.getImages(); 
+		for (Images i : imageList){
+			imagesRepo.saveImages(i); 
+			imagesRepo.linkImageToCho(i, cho);
 		}
+//		List<Map<String, Image>> imageList = cho.getImages(); 
+//		for (Map<String, Image> map : imageList){
+//			for (Map.Entry<String, Image> entry : map.entrySet()){
+//				Image i = entry.getValue(); 
+//				imageRepository.save(i);
+//				imageRepository.linkImageToCho(i, cho); 
+//			}
+//		}
 		 
 		}
 		//calling jpaExample to try out jpa

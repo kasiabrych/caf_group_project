@@ -23,8 +23,10 @@ public class CHObject {
 	@JsonUnwrapped
 	@JsonProperty ("participants")
 	private List<Participation> participations; 
-	private List<Map<String, Image>> images; 
+	//private List<Map<String, Image>> images; 
 
+	private List <Images> images; 
+	
 	public int getId() {
 		return id;
 	}
@@ -90,8 +92,10 @@ public class CHObject {
 		for (Participation p : getParticipations()) {
 			choAsString += "\n-- "+ p.toString(); 
 		}
-		for (Map<String, Image> map : images){
-			choAsString += "\n-- " + map.toString(); 
+//		for (Map<String, Image> map : images){
+//			choAsString += "\n-- " + map.toString(); 
+		for (Images i: getImages()){
+			choAsString += "\n-- "+i.toString(); 
 		}
 		return choAsString; 
 	}
@@ -104,11 +108,19 @@ public class CHObject {
 		this.participations = participations;
 	}
 
-	public List<Map<String, Image>> getImages() {
+	public List <Images> getImages() {
 		return images;
 	}
 
-	public void setImages(List<Map<String, Image>> images) {
+	public void setImages(List <Images> images) {
 		this.images = images;
-	} 
+	}
+
+//	public List<Map<String, Image>> getImages() {
+//		return images;
+//	}
+//
+//	public void setImages(List<Map<String, Image>> images) {
+//		this.images = images;
+//	} 
 }
