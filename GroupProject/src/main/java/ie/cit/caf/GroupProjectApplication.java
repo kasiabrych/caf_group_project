@@ -52,7 +52,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @ActiveProfiles ("default")
 @Import(DefaultConfig.class)
 public class GroupProjectApplication implements CommandLineRunner{
-	
+ 
 	@Autowired
 	ChoJpaRepo choJpaRepo; 
 	@Autowired
@@ -89,6 +89,13 @@ public class GroupProjectApplication implements CommandLineRunner{
 	 //run method converts .json to java objects and stores object in db
 	@Override
 	public void run(String... args) throws Exception {
+		
+		jdbcTemplate.execute("TRUNCATE TABLE " + "chobjects");
+		jdbcTemplate.execute("TRUNCATE TABLE " + "cho_images");
+		jdbcTemplate.execute("TRUNCATE TABLE " + "images");
+		jdbcTemplate.execute("TRUNCATE TABLE " + "object_participant_role");
+		jdbcTemplate.execute("TRUNCATE TABLE " + "participants");
+		jdbcTemplate.execute("TRUNCATE TABLE " + "roles");
 		
 		 String choFile = args[0]; 
 		 System.out.printf("Processing file %s...\n", choFile); 
