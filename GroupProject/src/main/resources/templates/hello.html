@@ -7,6 +7,24 @@
 <title>HELLO</title>
 </head>
 <body>
+<!-- Facebook SDK -->
+<script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : 495409500610109,
+          xfbml      : true,
+          version    : 'v2.3'
+        });
+      };
+
+      (function(d, s, id){
+         var js, fjs = d.getElementsByTagName(s)[0];
+         if (d.getElementById(id)) {return;}
+         js = d.createElement(s); js.id = id;
+         js.src = "//connect.facebook.net/en_US/sdk.js";
+         fjs.parentNode.insertBefore(js, fjs);
+       }(document, 'script', 'facebook-jssdk'));
+    </script>
 <div class="container">
   <div class="jumbotron">
     <h1>Cooper-Hewitt Interactive Museum</h1>
@@ -20,15 +38,24 @@
     </div>
     <div class="col-sm-4">
       <h3>Column 2</h3>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-    </div>
-    <div class="col-sm-4">
-      <h3>Column 3</h3> 
       <p th:text="${message}"></p>
       <p th:text="${now}"></p>
+    </div>
+    <div class="col-sm-4">
+      <h3>Social</h3>
+      <p></p> 
+      <!-- Twitter link -->
+   	<a class="twitter-timeline" href="https://twitter.com/cooperhewitt" data-widget-id="592461519822188545">Tweets by @cooperhewitt</a>
+	<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
       <p></p>
+      <!-- Facebook link -->
+      <div class="fb-like" data-href="https://www.facebook.com/cooperhewitt" data-width="300" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
       <p></p>
+      <!-- www.intagme.com -->
+	  <iframe src="http://www.intagme.com/in/?u=Y29vcGVyaGV3aXR0fHNsfDMwMHwyfDN8MTQyZmUwfG5vfDV8dW5kZWZpbmVkfHllcw==" allowTransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden; width:305px; height: 305px" ></iframe>
+      <p></p>
+      <!-- youtube link -->
+     <script type="text/javascript" src="https://ytchannelembed.com/ytce-frgallery.js"></script><div style="width:100%;max-width:275px;" class="ytce" data-user="cooperhewitt" data-rows="4" data-ratio="hd" data-width="130" data-margin="15" data-desc="100" data-desc_color="9E9E9E" data-title="30" data-title_color="000000" data-https="0" data-duration="1" data-views="1" data-likes="1" data-dislikes="1" data-fav="1" data-cols="2" ></div>
     </div>
   </div>
 </div>
