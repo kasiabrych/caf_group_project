@@ -78,10 +78,6 @@ public class GroupProjectApplication implements CommandLineRunner{
 	@Autowired 
 	ParticipationService participationService; 
 	
-	//those were set up in an attempt to add populate the participants table without duplicates
-	final static Set <Participant> allPart = new HashSet <Participant>();
-	Iterator<Participant> iterator = allPart.iterator(); 
-	
 	 public static void main(String[] args) {
 	        SpringApplication.run(GroupProjectApplication.class, args);
 	    }
@@ -90,6 +86,7 @@ public class GroupProjectApplication implements CommandLineRunner{
 	@Override
 	public void run(String... args) throws Exception {
 		
+		//empty tables
 		jdbcTemplate.execute("TRUNCATE TABLE " + "chobjects");
 		//jdbcTemplate.execute("TRUNCATE TABLE " + "cho_images");
 		jdbcTemplate.execute("TRUNCATE TABLE " + "images");
@@ -111,27 +108,12 @@ public class GroupProjectApplication implements CommandLineRunner{
 		List<Participation> partList = cho.getParticipations(); 
 		for (Participation p : partList) {
 			Participant participant = p.getParticipant(); 
-			//Participant part2 = null; 
-			if (participantRepository.checkIfExist(Integer.parseInt(participant.getPerson_id()))==null){
-				participantService.save(participant);
-				//part2 = participantService.get(participant.getParticipant_id()); 
-				//part2=participant; 
-			}//else
-//				part2 = participantService.get(participant.getParticipant_id()); 
-//			checkIfExists(participant); 
-			//the above method was meant to check if participant has already been added, 
-			//it does not work
 			
-//			saveAllPart(allPart);
+			//if (participantRepository.checkIfExist(Integer.parseInt(participant.getPerson_id()))==null){
+				participantService.save(participant);
+				
+			//}
 			Role role = p.getRole(); 
-//			if (participant.getParticipant_id() ==0); 
-			//participantRepository.saveInsert(participant);
-			//populating the table using the service layer
-			//participantService.save(participant); 
-
-//			if (role.getRole_no() ==0)
-			//roleRepository.save(role); 
-			//populating the table using service layer
 			roleService.save(role); 
 			//populating the object_participant_role table using service layer
 			participationService.saveParticipation(cho, participant, role); 
@@ -143,99 +125,12 @@ public class GroupProjectApplication implements CommandLineRunner{
 			imagesRepo.saveImagesWithCHOId(i, cho); 
 			//imagesRepo.linkImageToCho(i, cho);
 		}
-//		List<Map<String, Image>> imageList = cho.getImages(); 
-//		for (Map<String, Image> map : imageList){
-//			for (Map.Entry<String, Image> entry : map.entrySet()){
-//				Image i = entry.getValue(); 
-//				imageRepository.save(i);
-//				imageRepository.linkImageToCho(i, cho); 
-//			}
-//		}
 		 
 		}
 		//calling jpaExample to try out jpa
 		jpaExample(); 
-		//the code below was meant to ensure that a participant was added only once, 
-		//it does not work
-		//saveAllPart(allPart);
 		} 
-//private void checkIfExists(Participant participant) {
-//	if (!allPart.isEmpty()){
-//the use of iterator was attempted because for loop was throwing java.util.ConcurrentModificationException
-//		while (iterator.hasNext()){
-//			
-//		Participant par = iterator.next(); 
-//		
-//			if (participant.getPerson_id().equalsIgnoreCase(par.getPerson_id())){
-//				System.out.println("Existing participant");
-//			}else
-//				allPart.add(participant); 
-//			
-//		}		
-//		}else
-//			allPart.add(participant); 
-//		
-//	}
-//the method below was also meant to prevent duplication, unsuccessfully
-//private void saveAllPart(Set<Participant> allPart) {
-//	for (Participant par : allPart){
-////		if (par.getParticipant_id() !=0){
-////		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!"+par.getPerson_name() +par.getParticipant_id());	
-////		}else
-//		participantRepository.saveInsert(par);
-//		//System.out.println("~~~~~~~~~~~~~~~~~~~~~~~~~~"+par.getPerson_name()+par.getParticipant_id());
-//	}
-//	System.out.println(allPart.size());
-//}
 
-///////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////
-///Ignore methods below, they were used initially to test db connectivity and classes//////////
-	public void query01() {
-		// Query for a list of maps with key-value pairs
-		// The hard way!!!
-			
-		System.out.println("\nQuery 1 (List all artists using resultset Map)\n----------------");
-			
-		String sql = "SELECT * FROM chobjects";
-		List<Map<String, Object>> resultSet = jdbcTemplate.queryForList(sql);
-			
-		for (Map<String, Object> row : resultSet) {
-			System.out.println("Name: " + row.get("id"));
-			System.out.println("ID: " + row.get("title"));
-			System.out.println("Gender: " + row.get("date") + "\n");
-		}
-	}
-	public void query02() {
-		// Query for a list of objects - automatic mapping from row to object using RowMapper class
-		// Using parameterised "prepared statements" reduces the risk of a SQL inject attack
-			
-		System.out.println("\nQuery 2 (List male artists using RowMapper)\n-----------------");
-			
-		String sql = "SELECT * FROM chobjects WHERE id = ?";
-		List<CHObject> chobjects = jdbcTemplate.query(sql, new Object[] { "68268203" }, new CHORowMapper());
-			
-		for (CHObject artist : chobjects) {
-			System.out.println(artist.toString());
-		}
-	}
-	public void repositoryExample(){
-		CHObject chobject = new CHObject(); 
-		chobject.setId(71);
-		chobject.setTitle("break");
-		chobject.setDate("taday");
-		chobject.setMedium("glass"); 
-		chobject.setCreditline("no"); 
-		chobject.setDescription("low");
-		chobject.setGallery_text("No text");
-		
-		choRepository.save(chobject);
-		
-		CHObject cho2 = choRepository.get(80); 
-		System.out.println("CHO added"); 
-		System.out.println(cho2.toString());
-		
-	}
 	public void jpaExample(){
 		
 		long count = choJpaRepo.count(); 
