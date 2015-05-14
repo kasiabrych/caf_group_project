@@ -10,6 +10,8 @@ import ie.cit.caf.domain.Role;
 import ie.cit.caf.fileFinder.FileFinder;
 import ie.cit.caf.jparepo.ChoJpaRepo;
 import ie.cit.caf.jparepo.ImagesJpaRepo;
+import ie.cit.caf.jparepo.ParticipantJpaRepo;
+import ie.cit.caf.jparepo.RoleJpaRepo;
 import ie.cit.caf.repository.CHORepository;
 import ie.cit.caf.repository.ImageRepository;
 import ie.cit.caf.repository.ImagesRepository;
@@ -60,6 +62,10 @@ public class GroupProjectApplication implements CommandLineRunner{
 	ChoJpaRepo choJpaRepo; 
 	@Autowired
 	ImagesJpaRepo imagesJpaRepo; 
+	@Autowired
+	RoleJpaRepo roleJpaRepo; 
+	@Autowired
+	ParticipantJpaRepo participantJpaRepo; 
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	@Autowired
@@ -124,8 +130,22 @@ public class GroupProjectApplication implements CommandLineRunner{
 		}
 		//calling jpaExample to try out jpa
 		jpaExample(); 
-		jpaImages(); 
+		//jpaImages(); 
+		jpaPartAndRole(); 
 	} 
+
+	private void jpaPartAndRole() {
+		
+		ie.cit.caf.entity.Role role = roleJpaRepo.findOne(4); 
+		System.out.println("********Role 4: "+role);
+		
+		ie.cit.caf.entity.Participant part = participantJpaRepo.findOne(75); 
+		System.out.println("££££££££££££££Participant 75: "+part);
+		
+		ie.cit.caf.entity.Participant part2 = participantJpaRepo.findOne(12); 
+		System.out.println("££££££££££££££Participant 12: "+part2);
+		
+	}
 
 	public void jpaExample(){
 

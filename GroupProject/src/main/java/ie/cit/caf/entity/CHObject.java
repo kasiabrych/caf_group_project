@@ -38,10 +38,10 @@ public class CHObject {
 	
 	@Override
 	public String toString() {
-		return "CHObject [id=" + id + ", title=" + title + ", date=" + date
-				+ ", medium=" + medium + ", creditline=" + creditline
-				+ ", description=" + description + ", gallery_text="
-				+ gallery_text + ", participations=" + participations + "]";
+		return "CHObject [id=" + id + ",\n title=" + title + ",\n date=" + date
+				+ ",\n medium=" + medium + ",\n creditline=" + creditline
+				+ ",\n description=" + description + ",\n gallery_text="
+				+ gallery_text + ",\n participations=" + participations + "]";
 	}
 	public int getId() {
 		return id;
