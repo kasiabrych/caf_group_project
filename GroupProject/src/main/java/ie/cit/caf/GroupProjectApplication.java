@@ -18,6 +18,7 @@ import ie.cit.caf.repository.ParticipationRepository;
 import ie.cit.caf.repository.RoleRepository;
 import ie.cit.caf.rowmapper.CHORowMapper;
 import ie.cit.caf.service.CHObjectService;
+import ie.cit.caf.service.ImagesService;
 import ie.cit.caf.service.ParticipantService;
 import ie.cit.caf.service.ParticipationService;
 import ie.cit.caf.service.RoleService;
@@ -52,7 +53,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @ActiveProfiles ("default")
 @Import(DefaultConfig.class)
 public class GroupProjectApplication implements CommandLineRunner{
- 
+
+	//choJpaRepo to be replaced with service class
 	@Autowired
 	ChoJpaRepo choJpaRepo; 
 	@Autowired
@@ -60,32 +62,22 @@ public class GroupProjectApplication implements CommandLineRunner{
 	@Autowired
 	CHObjectService choService; 
 	@Autowired
-	CHORepository choRepository; 
-	@Autowired
-	RoleRepository roleRepository; 
-	@Autowired
 	RoleService roleService; 
 	@Autowired
-	ImageRepository imageRepository; 
-	@Autowired
-	ImagesRepository imagesRepo; 
-	@Autowired 
-	ParticipantRepository participantRepository; 
+	ImagesService imagesService; 
 	@Autowired 
 	ParticipantService participantService; 
 	@Autowired 
-	ParticipationRepository participationRepository; 
-	@Autowired 
 	ParticipationService participationService; 
-	
-	 public static void main(String[] args) {
-	        SpringApplication.run(GroupProjectApplication.class, args);
-	    }
-	
-	 //run method converts .json to java objects and stores object in db
+
+	public static void main(String[] args) {
+		SpringApplication.run(GroupProjectApplication.class, args);
+	}
+
+	//run method converts .json to java objects and stores object in db
 	@Override
 	public void run(String... args) throws Exception {
-		
+
 		//empty tables
 		jdbcTemplate.execute("TRUNCATE TABLE " + "chobjects");
 		//jdbcTemplate.execute("TRUNCATE TABLE " + "cho_images");
@@ -93,52 +85,52 @@ public class GroupProjectApplication implements CommandLineRunner{
 		jdbcTemplate.execute("TRUNCATE TABLE " + "object_participant_role");
 		jdbcTemplate.execute("TRUNCATE TABLE " + "participants");
 		jdbcTemplate.execute("TRUNCATE TABLE " + "roles");
-		
-		 String choFile = args[0]; 
-		 System.out.printf("Processing file %s...\n", choFile); 
-	
+
+		String choFile = args[0]; 
+		System.out.printf("Processing file %s...\n", choFile); 
+
 		List <Path> files = FileFinder.getFileList(choFile, "*.json"); 
 		for (Path f : files){
-		CHObject cho = new ObjectMapper().readValue(f.toFile(), CHObject.class); 
-		System.out.println("\n" + cho.toString()); 
-		
-	
-		//saving CHObjects using service layer
-		choService.save(cho);
-		List<Participation> partList = cho.getParticipations(); 
-		for (Participation p : partList) {
-			Participant participant = p.getParticipant(); 
-			
-			//if (participantRepository.checkIfExist(Integer.parseInt(participant.getPerson_id()))==null){
+			CHObject cho = new ObjectMapper().readValue(f.toFile(), CHObject.class); 
+			System.out.println("\n" + cho.toString()); 
+
+			//saving CHObjects using service layer
+			choService.save(cho);
+			List<Participation> partList = cho.getParticipations(); 
+			for (Participation p : partList) {
+
+				//getting the participant
+				Participant participant = p.getParticipant(); 
+				//using service layer to save participant
 				participantService.save(participant);
-				
-			//}
-			Role role = p.getRole(); 
-			roleService.save(role); 
-			//populating the object_participant_role table using service layer
-			participationService.saveParticipation(cho, participant, role); 
-			
-		
-		}
-		List<Images> imageList = cho.getImages(); 
-		for (Images i : imageList){
-			imagesRepo.saveImagesWithCHOId(i, cho); 
-			//imagesRepo.linkImageToCho(i, cho);
-		}
-		 
+
+				Role role = p.getRole(); 
+				roleService.save(role); 
+				//populating the object_participant_role table using service layer
+				participationService.saveParticipation(cho, participant, role); 
+
+
+			}
+			//getting images and saving them (images table now contains the cho_id)
+			List<Images> imageList = cho.getImages(); 
+			for (Images i : imageList){
+				imagesService.saveImagesWithCHOId(i, cho); 
+				//imagesRepo.linkImageToCho(i, cho); //unnecessary, as images table now contains cho_id
+			}
+
 		}
 		//calling jpaExample to try out jpa
 		jpaExample(); 
-		} 
+	} 
 
 	public void jpaExample(){
-		
+
 		long count = choJpaRepo.count(); 
 		System.out.println("The count is "+ count);
-		
+
 		Iterable<ie.cit.caf.entity.CHObject> list = choJpaRepo.findAll();
 		System.out.println(list);
 	}
 
-	
+
 }
