@@ -15,6 +15,8 @@ public interface ImagesRepository {
 	
 	public List<Images> findAll();
 
-	public void linkImageToCho(Images i, CHObject cho); 
+	public void linkImageToCho(Images i, CHObject cho);
+
+	void saveImagesWithCHOId(Images images, CHObject cho); 
 
 }

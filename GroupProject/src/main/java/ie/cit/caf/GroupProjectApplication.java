@@ -91,7 +91,7 @@ public class GroupProjectApplication implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 		
 		jdbcTemplate.execute("TRUNCATE TABLE " + "chobjects");
-		jdbcTemplate.execute("TRUNCATE TABLE " + "cho_images");
+		//jdbcTemplate.execute("TRUNCATE TABLE " + "cho_images");
 		jdbcTemplate.execute("TRUNCATE TABLE " + "images");
 		jdbcTemplate.execute("TRUNCATE TABLE " + "object_participant_role");
 		jdbcTemplate.execute("TRUNCATE TABLE " + "participants");
@@ -140,8 +140,8 @@ public class GroupProjectApplication implements CommandLineRunner{
 		}
 		List<Images> imageList = cho.getImages(); 
 		for (Images i : imageList){
-			imagesRepo.saveImages(i); 
-			imagesRepo.linkImageToCho(i, cho);
+			imagesRepo.saveImagesWithCHOId(i, cho); 
+			//imagesRepo.linkImageToCho(i, cho);
 		}
 //		List<Map<String, Image>> imageList = cho.getImages(); 
 //		for (Map<String, Image> map : imageList){
