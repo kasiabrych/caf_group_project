@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head lang="en">
+<head th:include="layout :: htmlhead">
 <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" />
 <link type="text/css" rel="stylesheet" href="/css/bootstrap-theme.min.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -25,6 +25,11 @@
          fjs.parentNode.insertBefore(js, fjs);
        }(document, 'script', 'facebook-jssdk'));
     </script>
+    
+    <div th:replace="layout :: navbar">(navbar)</div>
+	<p>This needs to be left here </p>
+	<p>This needs to be left here </p>
+	
 <div class="container">
   <div class="jumbotron">
     <h1>Cooper-Hewitt Interactive Museum</h1>
@@ -59,6 +64,6 @@
     </div>
   </div>
 </div>
-
+<div th:include="layout :: footer" id="footer">(footer)</div>
 </body>
 </html>
