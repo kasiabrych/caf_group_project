@@ -9,6 +9,7 @@ import ie.cit.caf.domain.Participation;
 import ie.cit.caf.domain.Role;
 import ie.cit.caf.fileFinder.FileFinder;
 import ie.cit.caf.jparepo.ChoJpaRepo;
+import ie.cit.caf.jparepo.ImagesJpaRepo;
 import ie.cit.caf.repository.CHORepository;
 import ie.cit.caf.repository.ImageRepository;
 import ie.cit.caf.repository.ImagesRepository;
@@ -54,9 +55,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Import(DefaultConfig.class)
 public class GroupProjectApplication implements CommandLineRunner{
 
-	//choJpaRepo to be replaced with service class
+	//ChoJpaRepo and ImagesJpaRepo to be replaced with service class
 	@Autowired
 	ChoJpaRepo choJpaRepo; 
+	@Autowired
+	ImagesJpaRepo imagesJpaRepo; 
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	@Autowired
@@ -121,6 +124,7 @@ public class GroupProjectApplication implements CommandLineRunner{
 		}
 		//calling jpaExample to try out jpa
 		jpaExample(); 
+		jpaImages(); 
 	} 
 
 	public void jpaExample(){
@@ -130,6 +134,41 @@ public class GroupProjectApplication implements CommandLineRunner{
 
 		Iterable<ie.cit.caf.entity.CHObject> list = choJpaRepo.findAll();
 		System.out.println(list);
+	}
+	public void jpaImages(){
+		long count = imagesJpaRepo.count(); 
+		System.out.println("images count is "+ count);
+		
+		Iterable<ie.cit.caf.entity.Images> allImages = imagesJpaRepo.findAll(); 
+		System.out.println("\n\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"
+				+ "All images using crud repository method"+allImages);
+		
+		List<ie.cit.caf.entity.Images> bImages=imagesJpaRepo.findByImageResolution("B"); 
+		System.out.println("\n\n&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&\n"
+				+ "B Images"+bImages);
+		
+		System.out.println(imagesJpaRepo.exists(77)); 
+		System.out.println(imagesJpaRepo.exists(777)); 
+		
+		List<ie.cit.caf.entity.Images> idImages = imagesJpaRepo.findByChoId(68268203); 
+		System.out.println("\n\n%%%%%%%%%%%%%%%%%%%%%%%\n"
+				+ "images for choId 68268203"+idImages);
+		
+		ie.cit.caf.entity.Images i=imagesJpaRepo.findByChoIdAndImageResolution(68268203, "B"); 
+		System.out.println("\n\n**************************\n"
+				+ "Image 68268203 resolution B: \n"+i
+				+"\n££££££££££££££££££"
+				+ "Image url: "+i.getUrl());
+		
+		ie.cit.caf.entity.Images i1 = imagesJpaRepo.findOne(1); 
+		System.out.println("Image 1:"+i1);
+		
+		//I'm not sure why this is not working...
+//		String url = imagesJpaRepo.findUrlByChoIdAndImageResolution(68268203, "B"); 
+//		System.out.println("\n\n^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"
+//				+"url for image 68268203,B: "+url);
+//		String why = "why is this not working"; 
+//		System.out.println(why);
 	}
 
 

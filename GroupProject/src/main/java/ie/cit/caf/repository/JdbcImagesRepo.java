@@ -40,6 +40,7 @@ private JdbcTemplate jdbcTemplate;
 		paramsB.put("height", b.getHeight()); 
 		paramsB.put("image_id", b.getImage_id()); 
 		paramsB.put("cho_id", cho.getId()); 
+		paramsB.put("is_primary", b.getIs_primary()); 
 		Number newId = insertB.executeAndReturnKey(paramsB);
 		b.setImage_no(newId.intValue());
 		
@@ -53,6 +54,7 @@ private JdbcTemplate jdbcTemplate;
 		paramsD.put("height", d.getHeight()); 
 		paramsD.put("image_id", d.getImage_id()); 
 		paramsD.put("cho_id", cho.getId());
+		paramsD.put("is_primary", d.getIs_primary()); 
 		Number newD = insertD.executeAndReturnKey(paramsD);
 		d.setImage_no(newD.intValue());
 		
@@ -66,6 +68,7 @@ private JdbcTemplate jdbcTemplate;
 		paramsN.put("height", n.getHeight()); 
 		paramsN.put("image_id", n.getImage_id()); 
 		paramsN.put("cho_id", cho.getId());
+		paramsN.put("is_primary", n.getIs_primary()); 
 		Number newN = insertN.executeAndReturnKey(paramsN);
 		n.setImage_no(newN.intValue());
 		
@@ -79,6 +82,7 @@ private JdbcTemplate jdbcTemplate;
 		paramsSq.put("height", sq.getHeight()); 
 		paramsSq.put("image_id", sq.getImage_id()); 
 		paramsSq.put("cho_id", cho.getId());
+		paramsSq.put("is_primary", sq.getIs_primary()); 
 		Number newSq = insertSq.executeAndReturnKey(paramsSq);
 		sq.setImage_no(newSq.intValue());
 		
@@ -92,6 +96,7 @@ private JdbcTemplate jdbcTemplate;
 		paramsZ.put("height", z.getHeight()); 
 		paramsZ.put("image_id", z.getImage_id()); 
 		paramsZ.put("cho_id", cho.getId());
+		paramsZ.put("is_primary", z.getIs_primary()); 
 		Number newZ = insertZ.executeAndReturnKey(paramsZ);
 		z.setImage_no(newZ.intValue());
 	}

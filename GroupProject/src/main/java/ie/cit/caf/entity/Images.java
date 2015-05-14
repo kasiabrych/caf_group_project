@@ -2,6 +2,7 @@ package ie.cit.caf.entity;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="images")
-public class Image {
+public class Images {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,9 +24,10 @@ public class Image {
 	private String height; 
 	private String is_primary; 
 	private String image_id;
-	
-//	@OneToOne(mappedBy="images")
-//	private CHObject cho;
+	@Column(name="image_resolution")
+	private String imageResolution; 
+	@Column(name="cho_id")
+	private int choId; 
 	
 	public int getImage_no() {
 		return image_no;
@@ -65,9 +67,22 @@ public class Image {
 	}
 	@Override
 	public String toString() {
-		return "Image [image_no=" + image_no + ", url=" + url + ", width="
-				+ width + ", height=" + height + ", is_primary=" + is_primary
-				+ ", image_id=" + image_id + "]";
+		return "Images [image_no=" + image_no + ",\n url=" + url + ",\n width="
+				+ width + ",\n height=" + height + ",\n is_primary=" + is_primary
+				+ ",\n image_id=" + image_id + ",\n imageResolution="
+				+ imageResolution + ",\n choId=" + choId + "]\n\n";
+	}
+	public String getImage_resolution() {
+		return imageResolution;
+	}
+	public void setImage_resolution(String imageResolution) {
+		this.imageResolution = imageResolution;
+	}
+	public int getCho_id() {
+		return choId;
+	}
+	public void setCho_id(int choId) {
+		this.choId = choId;
 	}
 
 }
