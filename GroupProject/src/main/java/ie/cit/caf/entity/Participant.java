@@ -19,7 +19,8 @@ public class Participant implements Serializable{
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int participant_id; 
+	@Column(name="participant_id")
+	private int participantId; 
 	private String person_id; 
 	@Column(name="person_name")
 	private String personName; 
@@ -28,15 +29,15 @@ public class Participant implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Participant [participant_id=" + participant_id + ", person_id="
+		return "Participant [participant_id=" + participantId + ", person_id="
 				+ person_id + ", person_name=" + personName + ", person_date="
 				+ person_date + ", person_url=" + person_url + "]";
 	}
-	public int getParticipant_id() {
-		return participant_id;
+	public int getParticipantId() {
+		return participantId;
 	}
-	public void setParticipant_id(int participant_id) {
-		this.participant_id = participant_id;
+	public void setParticipantId(int participantId) {
+		this.participantId = participantId;
 	}
 	public String getPerson_id() {
 		return person_id;

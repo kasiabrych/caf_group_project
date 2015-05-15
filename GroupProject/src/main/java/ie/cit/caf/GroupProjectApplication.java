@@ -11,6 +11,7 @@ import ie.cit.caf.fileFinder.FileFinder;
 import ie.cit.caf.jparepo.ChoJpaRepo;
 import ie.cit.caf.jparepo.ImagesJpaRepo;
 import ie.cit.caf.jparepo.ParticipantJpaRepo;
+import ie.cit.caf.jparepo.ParticipationJpaRepo;
 import ie.cit.caf.jparepo.RoleJpaRepo;
 import ie.cit.caf.repository.CHORepository;
 import ie.cit.caf.repository.ImageRepository;
@@ -66,6 +67,8 @@ public class GroupProjectApplication implements CommandLineRunner{
 	RoleJpaRepo roleJpaRepo; 
 	@Autowired
 	ParticipantJpaRepo participantJpaRepo; 
+	@Autowired
+	ParticipationJpaRepo participationJpaRepo; 
 	@Autowired
 	JdbcTemplate jdbcTemplate;
 	@Autowired
@@ -129,10 +132,31 @@ public class GroupProjectApplication implements CommandLineRunner{
 
 		}
 		//calling jpaExample to try out jpa
-		jpaExample(); 
+		//jpaExample(); 
 		//jpaImages(); 
-		jpaPartAndRole(); 
+		//jpaPartAndRole(); 
+		jpaParticipation(); 
 	} 
+
+	private void jpaParticipation() {
+		ie.cit.caf.entity.Participant part = participantJpaRepo.findOne(1); 
+		System.out.println("Participant: "+part);
+		ie.cit.caf.entity.Role roleName=participationJpaRepo.findRoleByParticipant(part); 
+		System.out.println("Role name returned by the participationJpaRepo: "+roleName);
+		
+		Iterable<ie.cit.caf.entity.Participation> partList = 
+				participationJpaRepo.findParticipationByParticipant(part); 
+		System.out.println("PartList for part(1): "+partList);
+		
+		Iterable<ie.cit.caf.entity.Participation> partList2 = 
+				participationJpaRepo.findParticipationByParticipantParticipantId(1); 
+		System.out.println("PartList for part(1): "+partList2);
+		
+		Iterable<ie.cit.caf.entity.Role> roleList3 = 
+				participationJpaRepo.findRoleByParticipantParticipantId(1); 
+		System.out.println("Role for part(1): "+roleList3);
+		
+	}
 
 	private void jpaPartAndRole() {
 		
