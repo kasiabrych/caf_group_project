@@ -135,8 +135,20 @@ public class GroupProjectApplication implements CommandLineRunner{
 		//jpaExample(); 
 		//jpaImages(); 
 		//jpaPartAndRole(); 
-		jpaParticipation(); 
+		//jpaParticipation(); 
+		joiningChoAndParticipations(); 
 	} 
+
+	private void joiningChoAndParticipations() {
+		
+		Iterable<ie.cit.caf.entity.Participation> list= 
+				choJpaRepo.findParticipationsById(68268203); 
+		System.out.println("11111111111111111111\nListing participations with ChoJpaRepo: "+list);
+		
+		ie.cit.caf.entity.CHObject cho=choJpaRepo.findOne(68268203); 
+		System.out.println("222222222222222222222\nchoJpaRepo.findOne(int) result: "+cho);
+		
+	}
 
 	private void jpaParticipation() {
 		ie.cit.caf.entity.Participant part = participantJpaRepo.findOne(1); 
@@ -155,6 +167,8 @@ public class GroupProjectApplication implements CommandLineRunner{
 		Iterable<ie.cit.caf.entity.Role> roleList3 = 
 				participationJpaRepo.findRoleByParticipantParticipantId(1); 
 		System.out.println("Role for part(1): "+roleList3);
+		
+		
 		
 	}
 
