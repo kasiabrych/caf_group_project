@@ -2,6 +2,7 @@ package ie.cit.caf.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,14 +21,15 @@ public class Participant implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int participant_id; 
 	private String person_id; 
-	private String person_name; 
+	@Column(name="person_name")
+	private String personName; 
 	private String person_date; 
 	private String person_url;
 
 	@Override
 	public String toString() {
 		return "Participant [participant_id=" + participant_id + ", person_id="
-				+ person_id + ", person_name=" + person_name + ", person_date="
+				+ person_id + ", person_name=" + personName + ", person_date="
 				+ person_date + ", person_url=" + person_url + "]";
 	}
 	public int getParticipant_id() {
@@ -43,10 +45,10 @@ public class Participant implements Serializable{
 		this.person_id = person_id;
 	}
 	public String getPerson_name() {
-		return person_name;
+		return personName;
 	}
-	public void setPerson_name(String person_name) {
-		this.person_name = person_name;
+	public void setPerson_name(String personName) {
+		this.personName = personName;
 	}
 	public String getPerson_date() {
 		return person_date;

@@ -145,6 +145,11 @@ public class GroupProjectApplication implements CommandLineRunner{
 		ie.cit.caf.entity.Participant part2 = participantJpaRepo.findOne(12); 
 		System.out.println("££££££££££££££Participant 12: "+part2);
 		
+		Iterable<ie.cit.caf.entity.Participant> partList = 
+				participantJpaRepo.findByPersonNameLike("Ilonka Karasz"); 
+		System.out.println("6666666666666666666666666\n"
+				+ "People with name like Ilonka Karasz: "+partList);
+		
 	}
 
 	public void jpaExample(){
