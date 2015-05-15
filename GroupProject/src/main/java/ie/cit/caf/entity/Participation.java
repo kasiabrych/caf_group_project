@@ -34,6 +34,30 @@ public class Participation {
 	public String toString() {
 		return "Participation\n [\nparticipation_id=" + participation_id
 				+ ",\n participant=" + participant + ",\n role=" + role + "]";
+	}
+
+	public int getParticipation_id() {
+		return participation_id;
+	}
+
+	public void setParticipation_id(int participation_id) {
+		this.participation_id = participation_id;
+	}
+
+	public Participant getParticipant() {
+		return participant;
+	}
+
+	public void setParticipant(Participant participant) {
+		this.participant = participant;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
 	} 
 
 }
