@@ -39,5 +39,22 @@ public class ImageController {
 		return "displayParticipants";
 		
 	}*/
+	//commented out because the method below does the same job
+//	@RequestMapping(value="/listall/B", method = RequestMethod.GET) 
+//	public String listAllB(ModelMap model) {			
+//			
+//			List<ie.cit.caf.entity.Images> listImage=imageJpaRepo.findByImageResolution("B"); 
+//			model.addAttribute("Images", listImage);
+//		    return "displayImages";			
+//		} 
+	
+	//displays images of a given resolution only using path variable
+	@RequestMapping(value="/listall/{resolution}", method = RequestMethod.GET) 
+	public String listAllResolution(@PathVariable String resolution, ModelMap model) {			
+			
+			List<ie.cit.caf.entity.Images> listImage=imageJpaRepo.findByImageResolution(resolution); 
+			model.addAttribute("Images", listImage);
+		    return "displayImages";			
+		}  
 		
 }                      
