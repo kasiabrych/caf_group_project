@@ -7,12 +7,14 @@ import ie.cit.caf.domain.Images;
 import ie.cit.caf.domain.Participant;
 import ie.cit.caf.domain.Participation;
 import ie.cit.caf.domain.Role;
+import ie.cit.caf.entity.User;
 import ie.cit.caf.fileFinder.FileFinder;
 import ie.cit.caf.jparepo.ChoJpaRepo;
 import ie.cit.caf.jparepo.ImagesJpaRepo;
 import ie.cit.caf.jparepo.ParticipantJpaRepo;
 import ie.cit.caf.jparepo.ParticipationJpaRepo;
 import ie.cit.caf.jparepo.RoleJpaRepo;
+import ie.cit.caf.jparepo.UserJpaRepo;
 import ie.cit.caf.repository.CHORepository;
 import ie.cit.caf.repository.ImageRepository;
 import ie.cit.caf.repository.ImagesRepository;
@@ -59,6 +61,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class GroupProjectApplication implements CommandLineRunner{
 
 	//ChoJpaRepo and ImagesJpaRepo to be replaced with service class
+	@Autowired
+	UserJpaRepo userJpaRepo; 
 	@Autowired
 	ChoJpaRepo choJpaRepo; 
 	@Autowired
@@ -136,8 +140,20 @@ public class GroupProjectApplication implements CommandLineRunner{
 		//jpaImages(); 
 		//jpaPartAndRole(); 
 		//jpaParticipation(); 
-		joiningChoAndParticipations(); 
+		//joiningChoAndParticipations(); 
+		createUser(); 
 	} 
+
+	private void createUser() {
+		User user = new User();
+		user.setUserName("Brian"); 
+		user.setPassword("password");
+		
+		userJpaRepo.save(user); 
+		
+		System.out.println(user);
+		
+	}
 
 	private void joiningChoAndParticipations() {
 		
