@@ -1,0 +1,44 @@
+<html xmlns:th="http://www.thymeleaf.org"> 
+<head th:include="layout :: htmlhead" th:with="title='Modify songwriter'">
+</head>
+<body>
+<div th:replace="layout :: navbar">(navbar)</div>
+
+<div class="container">
+<p>This needs to be left here </p>
+<p>This needs to be left here </p>
+
+<div class="container">
+<h2>Enter the details to modify the Songwriter</h2>
+
+
+<form th:object="${user}" role="form" >
+
+<div class="form-group" >
+<label for="id" th:text="#{modifyUser.userId}" class="control-label"></label>
+<input type="text" th:value="${user.userId}" id="id" th:disabled="true" class="form-control" />
+</div>
+
+<div class="form-group" >
+<label for="userName" th:text="#{modifyUser.userName}" class="control-label"></label>
+<input type="text" id="disabledTextInput" th:value="${user.userName}" th:disabled="true" class="form-control" />
+</div>
+
+<div class="form-group">
+<label for="password" th:text="Password" class="control-label"></label>
+<input type="text" th:value="${user.password}" id="password" class="form-control" />
+</div>
+
+
+<div class="form-actions">
+<input type="button" value="Modify" id="modify" class="ui-button" />
+</div>
+</form>
+</div>  
+</div>
+
+<div th:include="layout :: footer" id="footer">(footer)</div>
+
+</body>
+
+</html>
