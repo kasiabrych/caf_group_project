@@ -28,7 +28,9 @@ public class UserController {
 
 	@Autowired
 	UserJpaRepo userJpaRepo; 
-	//List<String> interests=new ArrayList();
+	@Autowired
+	User user; 
+	List<String> interests=new ArrayList <String>();
 
 
 
@@ -114,7 +116,7 @@ public class UserController {
 	@RequestMapping(value="/list/id/{id}", method=RequestMethod.GET)
 	public String listUserByID(@PathVariable int id, ModelMap model){		
 		Date date = new java.util.Date();
-		List <User> users=new ArrayList();
+		List <User> users=new ArrayList<User>();
 		User u=userJpaRepo.findOne(id); 
 		users.add(u);
 		model.addAttribute("users", users);
@@ -122,17 +124,84 @@ public class UserController {
 		return "displayUsers";
 	} 
 //	@RequestMapping(value = "/addNew", method = RequestMethod.GET) 
-//	public String addNewSongwriter(ModelMap model) {  
-//
-//
-//		SongwriterImpl songwriter =new SongwriterImpl();
+//	public ModelAndView addNewUser() {   
+//		return new ModelAndView("addNewUser", "user", new User());
+//	} 
+//	
+	@RequestMapping(value = "/addNew", method = RequestMethod.POST)
+	public String displayUser(@ModelAttribute("user") User user, ModelMap model) {
+
+
+		model.addAttribute("userName", user.getUserName());
+		model.addAttribute("password", user.getPassword()); 
+//		
+//		if(user.getInterests()!=null && user.getInterests().size()>0){
+//            model.addAttribute("interests", user.getInterests());
+//        }
+
+		try {
+			//int id=songwriterDAO.createSongwriterGetID(songwriter.getFirstname(), songwriter.getFirstname(), songwriter.getAge());
+			userJpaRepo.save(user); 
+			int id=user.getUserId(); 
+			model.addAttribute("userId", Integer.toString(id));
+			System.out.println(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "displayUser";
+	}        
+	@RequestMapping(value = "/addNew", method = RequestMethod.GET) 
+	public String addNewSongwriter(ModelMap model) {  
+
 //		List<String> interests=new ArrayList<String>();
 //		interests.add("interest1");
 //		interests.add("interst2");
-//		songwriter.setInterests(interests);	
-//		model.addAttribute("songwriter", songwriter);		
-//		return "addnewsongwriter";
-//	} 
+//		user.setInterests(interests);	
+		model.addAttribute("user", user);		
+		return "addNewUser";
+	} 
+	@RequestMapping(value = "/delete", method = RequestMethod.GET) 
+	public String deleteUser(ModelMap model) {   
+		Iterable <User> users=userJpaRepo.findAll();
+		model.addAttribute("users", users);		
+		return "delete";
+	} 
+	@RequestMapping(value = "/delete/id/{id}", method = RequestMethod.GET) 
+	public String deleteSongwriterbyId(@PathVariable int id, ModelMap model) { 
+		User userDelete = userJpaRepo.findOne(id); 
+		userJpaRepo.delete(userDelete);
+		//userJpaRepo.delete(id);
+		model.addAttribute("greeting", "User with id "+ id +" and details below have been deleted from the system");
+		model.addAttribute("userName", userDelete.getUserName());
+		model.addAttribute("password", userDelete.getPassword());
+		model.addAttribute("userId", userDelete.getUserId());
+		return "displayUser";
+	} 
+	@RequestMapping(value="/modify", method = RequestMethod.GET) 
+	public String modify(ModelMap model) {			
+		List<User> users=userJpaRepo.findAll();
+		model.addAttribute("users", users);
+		return "modify";			
+	}  
+	@RequestMapping(value = "/modify/id/{id}", method = RequestMethod.GET) 
+	public String modifyUser(@PathVariable int id, ModelMap model) { 
+		User userModify = userJpaRepo.findOne(id); 
+		model.addAttribute("user", userModify);
+		return "modifyForm";	} 	
+	
+	@RequestMapping(value="/modify/id/{id}/password/{password}", method = RequestMethod.GET) 
+	public String modifySongwriter(@PathVariable int id, @PathVariable String password,  ModelMap model) {			
+		//userJpaRepo.updatePassword(id, password); 
+		User userM = userJpaRepo.findOne(id); 
+		userM.setPassword(password);
+		userJpaRepo.save(userM); 
+		model.addAttribute("message", "User with id "+ id +" has been modified");
+		model.addAttribute("userName", userM.getUserName());
+		model.addAttribute("password", userM.getPassword());
+		model.addAttribute("userId", userM.getUserId());
+		return "displayUser";		
+	}      
 //
 //	@RequestMapping(value = "/addNew", method = RequestMethod.POST)
 //	public String displaySongwriter(@ModelAttribute("songwriter") @Valid SongwriterImpl songwriter,  

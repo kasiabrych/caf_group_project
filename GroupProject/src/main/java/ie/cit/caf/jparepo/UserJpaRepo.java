@@ -11,5 +11,8 @@ import org.springframework.stereotype.Repository;
 public interface UserJpaRepo extends CrudRepository<User, Integer> {
 	
 	public List <User> findByUserName(String userName); 
+	
+	public List <User> findAll(); 
+	
 
 }

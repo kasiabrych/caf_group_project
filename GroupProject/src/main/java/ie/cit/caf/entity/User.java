@@ -1,11 +1,21 @@
 package ie.cit.caf.entity;
 
+import java.util.List;
+
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.stereotype.Component;
+
+@Component
 @Entity
 @Table(name="users")
 public class User {
@@ -15,6 +25,13 @@ public class User {
 	public int userId; 
 	public String userName; 
 	public String password;
+//	@ElementCollection
+//	@OneToMany(fetch = FetchType.EAGER)
+//	@JoinTable(name="interests",
+//			joinColumns={@JoinColumn(name="userId", referencedColumnName="userId")},
+//			inverseJoinColumns={@JoinColumn(name="interestId", referencedColumnName="interests")})
+//	private List<Interests> interests;
+	private Boolean newsletter;
 	
 	
 	public User() {
@@ -49,6 +66,18 @@ public class User {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+//	public List<Interests> getInterests() {
+//		return interests;
+//	}
+//	public void setInterests(List<String> interests2) {
+//		this.interests = interests2;
+//	}
+	public Boolean getNewsletter() {
+		return newsletter;
+	}
+	public void setNewsletter(Boolean newsletter) {
+		this.newsletter = newsletter;
 	}
 	
 }
