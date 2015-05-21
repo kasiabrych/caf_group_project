@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Cultural Heritage Objects</title>
+<title>Cultural Heritage Object</title>
 <!--  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>-->
 <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" />
 <link type="text/css" rel="stylesheet" href="/css/bootstrap-theme.min.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
+<script type="text/javascript">
+$(function() {
+$( "#dialog" ).dialog();
+$("#view").click(function(){          
+       var id=${cho.id};
+       var title=${cho.title};
+       var date=${cho.date}
+       var url="/cho/view/id/"+id+"/title/"+title;       
+});
+});
+</script>
 </head>
 
 <body>
@@ -17,9 +28,12 @@
 
 
 <div class="container">
-  <h2>CH Object Table</h2>
+  <h2>CH Object</h2>
+  
+  <form th:object="${cho}" role="form" >
+  </form>
   <p></p>            
-  <table class="table table-bordered table-hover">
+  <!-- <table class="table table-bordered table-hover">
   <thead>
       <tr>
       	<th>ID</th>
@@ -40,11 +54,11 @@
       <td th:text="${cho.creditline}"></td>
       <td th:text="${cho.description}"></td>
       <td th:text="${cho.gallery_text}"></td>
-     <!--  <td><a th:href="@{/cho/view/id/}+${cho.id}" class="ui-btn">View</a></td> -->
+      <td><a th:href="@{/cho/view/id/}+${cho.id}" class="ui-btn">View</a></td>
       
 </tr>
 </tbody>
-</table>
+</table> -->
 </div>
 <div th:include="layout :: footer" id="footer">(footer)</div>
 

@@ -3,6 +3,7 @@ package ie.cit.caf.controller;
 import java.util.List;
 
 import ie.cit.caf.domain.CHObject;
+import ie.cit.caf.entity.Participation;
 import ie.cit.caf.jparepo.ChoJpaRepo;
 import ie.cit.caf.repository.CHORepository;
 
@@ -29,7 +30,27 @@ public class CHOController {
 			List<CHObject> listCHO=choRep.findAll();
 			model.addAttribute("CHOs", listCHO);
 		    return "displayCHO";			
-		}    
+		}  
+	
+/*	@RequestMapping(value="/view", method = RequestMethod.GET) 
+	public String View(ModelMap model) {				
+		CHObject listCHO=choRep.get(0);
+		model.addAttribute("CHOs", listCHO);
+		return "view";			
+	}
+	
+	@RequestMapping(value = "/view/id/{id}", method = RequestMethod.GET)
+    public String viewCHObject(@PathVariable int id, ModelMap model) {
+           CHObject chobjectView=choRep.get(id);
+           model.addAttribute("message", "CH Object with id "+ id +" can now be viewed");
+           model.addAttribute("chobject", chobjectView);
+           return "viewCHO"; }*/ 
+	
+/*public List<CHObject> findByMediumContains(String mediumName);
+	
+	//this method is not needed, has the same effect as findOne(int id) from CrudRepository
+	public List<Participation> findParticipationsById(int id);*/
+	
 	@RequestMapping (value="/medium/like/{mediumName}", method = RequestMethod.GET)
 	public String choByMediumLike(@PathVariable String mediumName, ModelMap model){
 		
