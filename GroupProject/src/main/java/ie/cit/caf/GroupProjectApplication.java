@@ -1,3 +1,4 @@
+
 package ie.cit.caf;
 
 import ie.cit.caf.config.DefaultConfig;

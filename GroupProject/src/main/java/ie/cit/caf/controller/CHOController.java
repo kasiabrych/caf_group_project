@@ -29,7 +29,15 @@ public class CHOController {
 			List<CHObject> listCHO=choRep.findAll();
 			model.addAttribute("CHOs", listCHO);
 		    return "displayCHO";			
-		}    
+		}  
+	
+/*	@RequestMapping(value="/view", method = RequestMethod.GET) 
+	public String View(ModelMap model) {				
+		CHObject listCHO=choRep.get(0);
+		model.addAttribute("CHOs", listCHO);
+		return "view";			
+	}*/
+	
 	@RequestMapping (value="/medium/like/{mediumName}", method = RequestMethod.GET)
 	public String choByMediumLike(@PathVariable String mediumName, ModelMap model){
 		
@@ -44,7 +52,6 @@ public class CHOController {
 		@RequestMapping(value = "/view/id/{id}", method = RequestMethod.GET)
 	    public String viewCHObject(@PathVariable int id, ModelMap model) {
 	           CHObject chobjectView=choRep.get(id);
-	          
 	           model.addAttribute("message", "CH Object with id "+ id +" can now be viewed");
 	           model.addAttribute("chobject", chobjectView);
 	           return "viewCHO"; } 

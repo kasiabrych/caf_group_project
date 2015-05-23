@@ -2,10 +2,8 @@
 <head th:include="layout :: htmlhead" th:with="title='Cultural Heritage Objects'"></head>
 <body>
 <div th:replace="layout :: navbar">(navbar)</div>
+	<p></p>
 <div class="container">
-
-<p>This needs to be left here </p>
-<p>This needs to be left here </p>
 
 <div class="container">
   <h2>CH Object Table</h2>
@@ -31,6 +29,8 @@
       <td th:text="${cho.creditline}"></td>
       <td th:text="${cho.description}"></td>
       <td th:text="${cho.gallery_text}"></td>
+      <!-- VIEW BUTTON ADDED HAVE CODE TO MAKE THE TABLE SELECTABLE -->
+      <td><a th:href="@{/cho/view/id/}+${cho.id}" class="ui-btn">View</a></td>
       
 </tr>
 </tbody>
