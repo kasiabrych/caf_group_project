@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
 <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" />
 <link type="text/css" rel="stylesheet" href="/css/bootstrap-theme.min.css" />
+<link type="text/css" rel="stylesheet" href="/css/layout.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 <!-- <script type="text/javascript">
@@ -18,21 +19,74 @@ $("#view").click(function(){
 });
 });
 </script> -->
+<style type="text/css">
+	body {
+		background-image: url("http://www.personal.psu.edu/nmd5193/Project2%20Subpages/Images/cloud%20background.jpg");
+		}
+</style>
 </head>
 
 <body>
+
+
 <div th:replace="layout :: navbar">(navbar)</div>
-	<p></p>
+<p></p>
 	
-
-
-
 <div class="container">
-  <h2>CH Object</h2>
+
+  <h2>CH Object
+  <a class="btn btn-default glyphicon glyphicon-fire"></a>
+  <a class="btn btn-default glyphicon glyphicon-trash"></a>
+  </h2>
   
   
   <form th:object="${cho}" role="form" >
   </form>
+  
+  <div class="panel-group">
+    <div class="panel panel-default">
+      <div class="panel-heading">ID</div>
+      <div class="panel-body"><p th:text="${id}" ></p></div>
+    </div>
+
+    <div class="panel panel-primary">
+      <div class="panel-heading">Title</div>
+      <div class="panel-body"><p th:text="${chobject.title}" ></p></div>
+    </div>
+
+    <div class="panel panel-success">
+      <div class="panel-heading">Date</div>
+      <div class="panel-body"><p th:text="${chobject.date}" ></p></div>
+    </div>
+
+    <div class="panel panel-info">
+      <div class="panel-heading">Medium</div>
+      <div class="panel-body"><p th:text="${chobject.medium}" ></p></div>
+    </div>
+
+    <div class="panel panel-warning">
+      <div class="panel-heading">CreditLine</div>
+      <div class="panel-body"><p th:text="${chobject.creditline}" ></p></div>
+    </div>
+	 <p></p>
+    <div class="panel panel-danger">
+      <div class="panel-heading">Description</div>
+      <div class="panel-body"><p th:text="${chobject.description}" ></p></div>
+    </div>
+    <p></p>
+    <div class="panel-group">
+    <div class="panel panel-default">
+      <div class="panel-heading">Gallery Text</div>
+      <div class="panel-body"><p th:text="${chobject.gallery_text}" ></p></div>
+    </div>
+  </div>
+   <form role="form">
+    <div class="form-group">
+      <label for="comment">Comment:</label>
+      <textarea class="form-control" rows="5" id="comment"></textarea>
+    </div>
+  </form>
+  </div>
   
   <!-- ID IS DiSPLAYING NOTHING ELSE -->
   <p th:text="${id}" ></p>
@@ -42,7 +96,7 @@ $("#view").click(function(){
   <p th:text="${chobject.creditline}" ></p>
   <p th:text="${chobject.description}" ></p>
   <p th:text="${chobject.gallery_text}" ></p>
-   <!-- <p th:text="${chobject.image.image_no}" ></p> -->
+   <!-- <p th:text="${chobject.participant.participant_id}" ></p> -->
 
   <p></p>            
   
@@ -61,14 +115,14 @@ $("#view").click(function(){
       </tr>
     </thead>
     <tbody>
-  <tr>
-  	  <td th:text="${id}"></td>
+    <tr th:each="participant : ${Participants}">
+      <td th:text="${participant.participant_id}"></td>
+  	  <!-- <td th:text="${id}"></td>
       <td th:text="${title}"></td>
       <td th:text="${date}"></td>
       <td th:text="${medium}"></td>
       <td th:text="${creditline}"></td>
-      <td th:text="${description}"></td>
-      <td th:text="${gallery_text}"></td>
+      <td th:text="${description}"></td> -->
       
 </tr>
 </tbody>
