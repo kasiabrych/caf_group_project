@@ -37,19 +37,17 @@ public class CHOController {
 		CHObject listCHO=choRep.get(0);
 		model.addAttribute("CHOs", listCHO);
 		return "view";			
-	}
+	}*/
 	
+	
+	//METHOD IM HAVING ISSUE WITH
 	@RequestMapping(value = "/view/id/{id}", method = RequestMethod.GET)
     public String viewCHObject(@PathVariable int id, ModelMap model) {
            CHObject chobjectView=choRep.get(id);
            model.addAttribute("message", "CH Object with id "+ id +" can now be viewed");
            model.addAttribute("chobject", chobjectView);
-           return "viewCHO"; }*/ 
+           return "viewCHO"; } 
 	
-/*public List<CHObject> findByMediumContains(String mediumName);
-	
-	//this method is not needed, has the same effect as findOne(int id) from CrudRepository
-	public List<Participation> findParticipationsById(int id);*/
 	
 	@RequestMapping (value="/medium/like/{mediumName}", method = RequestMethod.GET)
 	public String choByMediumLike(@PathVariable String mediumName, ModelMap model){

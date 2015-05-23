@@ -7,7 +7,7 @@
 <link type="text/css" rel="stylesheet" href="/css/bootstrap-theme.min.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 $(function() {
 $( "#dialog" ).dialog();
 $("#view").click(function(){          
@@ -17,23 +17,38 @@ $("#view").click(function(){
        var url="/cho/view/id/"+id+"/title/"+title;       
 });
 });
-</script>
+</script> -->
 </head>
 
 <body>
 <div th:replace="layout :: navbar">(navbar)</div>
-	<p>This needs to be left here </p>
-	<p>This needs to be left here </p>
+	<p></p>
+	
 
 
 
 <div class="container">
   <h2>CH Object</h2>
   
+  
   <form th:object="${cho}" role="form" >
   </form>
+  
+  <!-- ID IS DiSPLAYING NOTHING ELSE -->
+  <p th:text="${id}" ></p>
+  <p th:text="${chobject.title}" ></p>
+  <p th:text="${chobject.date}" ></p>
+  <p th:text="${chobject.medium}" ></p>
+  <p th:text="${chobject.creditline}" ></p>
+  <p th:text="${chobject.description}" ></p>
+  <p th:text="${chobject.gallery_text}" ></p>
+   <!-- <p th:text="${chobject.image.image_no}" ></p> -->
+
   <p></p>            
-  <!-- <table class="table table-bordered table-hover">
+  
+  
+ <!--  TABLE WONT BE USED JUST TRYING TO DISPAY DATA -->
+  <table class="table table-bordered table-hover">
   <thead>
       <tr>
       	<th>ID</th>
@@ -46,19 +61,18 @@ $("#view").click(function(){
       </tr>
     </thead>
     <tbody>
-  <tr th:each="cho : ${CHOs}">
-  	  <td th:text="${cho.id}"></td>
-      <td th:text="${cho.title}"></td>
-      <td th:text="${cho.date}"></td>
-      <td th:text="${cho.medium}"></td>
-      <td th:text="${cho.creditline}"></td>
-      <td th:text="${cho.description}"></td>
-      <td th:text="${cho.gallery_text}"></td>
-      <td><a th:href="@{/cho/view/id/}+${cho.id}" class="ui-btn">View</a></td>
+  <tr>
+  	  <td th:text="${id}"></td>
+      <td th:text="${title}"></td>
+      <td th:text="${date}"></td>
+      <td th:text="${medium}"></td>
+      <td th:text="${creditline}"></td>
+      <td th:text="${description}"></td>
+      <td th:text="${gallery_text}"></td>
       
 </tr>
 </tbody>
-</table> -->
+</table>
 </div>
 <div th:include="layout :: footer" id="footer">(footer)</div>
 

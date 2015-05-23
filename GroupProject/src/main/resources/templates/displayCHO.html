@@ -11,8 +11,8 @@
 
 <body>
 <div th:replace="layout :: navbar">(navbar)</div>
-	<p>This needs to be left here </p>
-	<p>This needs to be left here </p>
+	<p></p>
+	
 
 
 
@@ -40,7 +40,8 @@
       <td th:text="${cho.creditline}"></td>
       <td th:text="${cho.description}"></td>
       <td th:text="${cho.gallery_text}"></td>
-     <!--  <td><a th:href="@{/cho/view/id/}+${cho.id}" class="ui-btn">View</a></td> -->
+      <!-- VIEW BUTTON ADDED HAVE CODE TO MAKE THE TABLE SELECTABLE -->
+      <td><a th:href="@{/cho/view/id/}+${cho.id}" class="ui-btn">View</a></td>
       
 </tr>
 </tbody>
