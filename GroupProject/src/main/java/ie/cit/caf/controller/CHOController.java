@@ -3,7 +3,6 @@ package ie.cit.caf.controller;
 import java.util.List;
 
 import ie.cit.caf.domain.CHObject;
-import ie.cit.caf.entity.Participation;
 import ie.cit.caf.jparepo.ChoJpaRepo;
 import ie.cit.caf.repository.CHORepository;
 
@@ -39,16 +38,6 @@ public class CHOController {
 		return "view";			
 	}*/
 	
-	
-	//METHOD IM HAVING ISSUE WITH
-	@RequestMapping(value = "/view/id/{id}", method = RequestMethod.GET)
-    public String viewCHObject(@PathVariable int id, ModelMap model) {
-           CHObject chobjectView=choRep.get(id);
-           model.addAttribute("message", "CH Object with id "+ id +" can now be viewed");
-           model.addAttribute("chobject", chobjectView);
-           return "viewCHO"; } 
-	
-	
 	@RequestMapping (value="/medium/like/{mediumName}", method = RequestMethod.GET)
 	public String choByMediumLike(@PathVariable String mediumName, ModelMap model){
 		
@@ -59,5 +48,12 @@ public class CHOController {
 		return "displayCHO";
 		
 	}
+	//METHOD IM HAVING ISSUE WITH
+		@RequestMapping(value = "/view/id/{id}", method = RequestMethod.GET)
+	    public String viewCHObject(@PathVariable int id, ModelMap model) {
+	           CHObject chobjectView=choRep.get(id);
+	           model.addAttribute("message", "CH Object with id "+ id +" can now be viewed");
+	           model.addAttribute("chobject", chobjectView);
+	           return "viewCHO"; } 
 		
 }                      

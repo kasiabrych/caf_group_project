@@ -41,51 +41,6 @@ public class UserController {
 		return "displayUsers";			
 	}  
 
-//	@RequestMapping(value="/delete", method = RequestMethod.GET) 
-//	public String Delete(ModelMap model) {				
-//		List<SongwriterImpl> listSongwriters=songwriterDAO.listSongwriters();
-//		model.addAttribute("songwriters", listSongwriters);
-//		model.addAttribute("greeting", "Please select a particular songwriter to delete");
-//		return "delete";			
-//	}
-//	@RequestMapping(value="/modify", method = RequestMethod.GET) 
-//	public String Modify(ModelMap model) {				
-//		List<SongwriterImpl> listSongwriters=songwriterDAO.listSongwriters();
-//		model.addAttribute("songwriters", listSongwriters);
-//		return "modify";			
-//	}
-//
-//	@RequestMapping(value = "/delete/id/{id}", method = RequestMethod.GET)
-//	public String deleteSongwriterbyId(@PathVariable int id, ModelMap model) {
-//		SongwriterImpl songwriterDelete=songwriterDAO.getSongwriter(id);
-//		songwriterDAO.deleteSongwriter(id);
-//		model.addAttribute("greeting", "Songwriter with id "+ id +" and details below have been deleted from the system");
-//		model.addAttribute("firstname", songwriterDelete.getFirstname());
-//		model.addAttribute("lastname", songwriterDelete.getLastname());
-//		model.addAttribute("age", songwriterDelete.getAge());
-//		return "displaysongwriter";
-//	}  
-//
-//	@RequestMapping(value="/modify/id/{id}/age/{age}", method = RequestMethod.GET)
-//	public String modifySongwriter(@PathVariable int id, @PathVariable int age,  ModelMap model) {               
-//		songwriterDAO.updateSongwriter(id, age);
-//		SongwriterImpl songwriterModify=songwriterDAO.getSongwriter(id);
-//		model.addAttribute("message", "Songwriter with id "+ id +" has been modified");
-//		model.addAttribute("firstname", songwriterModify.getFirstname());
-//		model.addAttribute("lastname", songwriterModify.getLastname());
-//		model.addAttribute("age", songwriterModify.getAge());
-//		return "displaysongwriter";      
-//	}  
-//
-//	@RequestMapping(value = "/modify/id/{id}", method = RequestMethod.GET)
-//	public String modifySongwriter(@PathVariable int id, ModelMap model) {
-//		SongwriterImpl songwriterModify=songwriterDAO.getSongwriter(id);
-//		model.addAttribute("message", "Songwriter with id "+ id +" can now be modified");
-//		model.addAttribute("songwriter", songwriterModify);
-//		return "modifyform"; }     
-//
-//
-//
 //	@RequestMapping(value="/song/{name}", method = RequestMethod.GET) 
 //	public String listSongwriterBySong(@PathVariable("name") String songName, ModelMap model){
 //		Date date = new java.util.Date();	
@@ -129,9 +84,12 @@ public class UserController {
 //	} 
 //	
 	@RequestMapping(value = "/addNew", method = RequestMethod.POST)
-	public String displayUser(@ModelAttribute("user") User user, ModelMap model) {
-
-
+	public String displayUser(@ModelAttribute("user") @Valid User user,  
+			BindingResult result, ModelMap model) {
+		
+		if(result.hasErrors())
+			return "addNewUser";                           
+		
 		model.addAttribute("userName", user.getUserName());
 		model.addAttribute("password", user.getPassword()); 
 //		
@@ -191,7 +149,15 @@ public class UserController {
 		return "modifyForm";	} 	
 	
 	@RequestMapping(value="/modify/id/{id}/password/{password}", method = RequestMethod.GET) 
-	public String modifySongwriter(@PathVariable int id, @PathVariable String password,  ModelMap model) {			
+	public String modifyUser(@ModelAttribute("user") @PathVariable int id, @PathVariable String password,  
+			ModelMap model, @Valid User userModify,  
+			BindingResult result) {	
+		
+		if(result.hasErrors()){
+			userModify = userJpaRepo.findOne(id); 
+			model.addAttribute("user", userModify);
+			return "modifyForm";
+		}
 		//userJpaRepo.updatePassword(id, password); 
 		User userM = userJpaRepo.findOne(id); 
 		userM.setPassword(password);

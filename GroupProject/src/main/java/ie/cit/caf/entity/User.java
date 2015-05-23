@@ -12,6 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.stereotype.Component;
 
@@ -23,7 +27,9 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	public int userId; 
+	@Size(min=2, max=30, message="Please enter a user name between 2 and 30 characters")
 	public String userName; 
+	@Size(min=2, max=20, message="The password must be between 2 and 20 characters")
 	public String password;
 //	@ElementCollection
 //	@OneToMany(fetch = FetchType.EAGER)
