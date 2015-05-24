@@ -31,7 +31,22 @@ public class UserController {
 	@Autowired
 	User user; 
 	List<String> interests=new ArrayList <String>();
-
+	
+	@RequestMapping(value={"/signup"}, method = RequestMethod.GET)
+	public String showSignupPage(ModelMap model) { 
+		Date date = new java.util.Date();		
+		model.addAttribute("message", "This is Cooper-Hewit Interactive signup page.");
+		model.addAttribute("now", date);
+		return "signup";
+	}
+	
+	@RequestMapping(value={"/login"}, method = RequestMethod.GET)
+	public String showLoginPage(ModelMap model) { 
+		Date date = new java.util.Date();		
+		model.addAttribute("message", "This is Cooper-Hewit Interactive login page.");
+		model.addAttribute("now", date);
+		return "login";
+	}
 
 
 	@RequestMapping(value="/listall", method = RequestMethod.GET) 
