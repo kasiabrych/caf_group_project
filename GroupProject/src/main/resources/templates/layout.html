@@ -49,6 +49,7 @@ $("#modify").click(function(){
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
         <span class="icon-bar"></span> 
       </button>
       <a class="navbar-brand" href="/"><img src="http://www.clivewilkinson.com/wp/wp-content/uploads/2014/09/cooper-hewitt-logo.png" width="100px" height="33px" alt="Cooper-Hewitt" /></a>
@@ -60,6 +61,16 @@ $("#modify").click(function(){
 		<li><a href="/participants/listall">Participants</a></li>
 		<li><a href="/roles/listall">Roles</a></li>
 		<li><a href="/images/listall">Images</a></li>
+		<li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Social
+          <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="/">MyPage</a></li>
+            <li><a href="/leaderboard">Leaderboard</a></li> <!-- <li><a th:href="@{/leaderboard}" href="Leaderboard.html"> Leaderboard </a></li>  -->
+            <li><a href="/Subscribe">Subscribe</a></li> <!-- <li><a th:href="@{/Subscribe}" href="Subscribe.html"> Subscribe </a></li>  -->
+            <li><a href="/Share">Share</a></li> <!-- <li><a th:href="@{/Share}" href="Share.html"> Share </a></li>  -->
+          </ul>
+        </li>
 		<li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">About
           <span class="caret"></span></a>
@@ -96,7 +107,7 @@ $("#modify").click(function(){
 						<li class="divider"></li>
 						
 						<li>
-							<a href="#"><span class="glyphicon glyphicon-off"></span> Sign out</a>
+							<a href="/logout"><span class="glyphicon glyphicon-off"></span> Sign out</a> <!-- <li><a th:href="@{/logout}" href="logout.html"> Logout </a></li> -->
 						</li>
 					</ul>
 				</li>
