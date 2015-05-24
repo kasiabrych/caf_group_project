@@ -1,9 +1,8 @@
 package ie.cit.caf.domain;
-public class Person {
 
 	import javax.validation.constraints.Min;
-	import javax.validation.constraints.NotNull;
-	import javax.validation.constraints.Size;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 	public class Person {
 
@@ -22,7 +21,7 @@ public class Person {
 	        this.username = username;
 	    }
 
-	    public Integer getPassword() {
+	    public String getPassword() {
 	        return password;
 	    }
 
@@ -36,5 +35,3 @@ public class Person {
 
 	}	
 	
-	
-}
