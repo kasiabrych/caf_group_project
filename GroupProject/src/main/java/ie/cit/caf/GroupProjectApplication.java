@@ -1,4 +1,3 @@
-
 package ie.cit.caf;
 
 import ie.cit.caf.config.DefaultConfig;
@@ -43,13 +42,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.annotation.Order;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.util.AntPathRequestMatcher;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 /*
  * author Kasia Brych (R00048777)
  * AssignmentApplication class: 
@@ -250,6 +258,35 @@ public class GroupProjectApplication implements CommandLineRunner{
 //		String why = "why is this not working"; 
 //		System.out.println(why);
 	}
+	@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+    protected static class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
+        @Autowired
+        private SecurityProperties security;
+
+        /*@SuppressWarnings("deprecation")
+		@Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http
+            .antMatchers("/","/hello").permitAll().anyRequest().authenticated()
+            .fullyAuthenticated().and().formLogin().loginPage("/login")
+            .failureUrl("/login?error").permitAll()
+            .and()
+            .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout");
+            ;
+        }*/
+        public void configure(AuthenticationManagerBuilder auth) throws Exception {
+            auth.inMemoryAuthentication().withUser("user").password("user").roles("USER");
+        }
+        
+        public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/login").setViewName("login");
+        }
+        
+        @Bean
+        public ApplicationSecurity applicationSecurity() {
+        return new ApplicationSecurity();
+        }
+    }
 
 }

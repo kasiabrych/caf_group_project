@@ -31,7 +31,22 @@ public class UserController {
 	@Autowired
 	User user; 
 	List<String> interests=new ArrayList <String>();
-
+	
+	@RequestMapping(value={"/signup"}, method = RequestMethod.GET)
+	public String showSignupPage(ModelMap model) { 
+		Date date = new java.util.Date();		
+		model.addAttribute("message", "This is Cooper-Hewit Interactive signup page.");
+		model.addAttribute("now", date);
+		return "signup";
+	}
+	
+	@RequestMapping(value={"/login"}, method = RequestMethod.GET)
+	public String showLoginPage(ModelMap model) { 
+		Date date = new java.util.Date();		
+		model.addAttribute("message", "This is Cooper-Hewit Interactive login page.");
+		model.addAttribute("now", date);
+		return "login";
+	}
 
 
 	@RequestMapping(value="/listall", method = RequestMethod.GET) 
@@ -78,11 +93,11 @@ public class UserController {
 		model.addAttribute("now", date);
 		return "displayUsers";
 	} 
-//	@RequestMapping(value = "/addNew", method = RequestMethod.GET) 
-//	public ModelAndView addNewUser() {   
-//		return new ModelAndView("addNewUser", "user", new User());
-//	} 
-//	
+	@RequestMapping(value = "/addNew", method = RequestMethod.GET) 
+	public ModelAndView addNewUser() {   
+		return new ModelAndView("addNewUser", "user", new User());
+	} 
+	
 	@RequestMapping(value = "/addNew", method = RequestMethod.POST)
 	public String displayUser(@ModelAttribute("user") @Valid User user,  
 			BindingResult result, ModelMap model) {
@@ -109,16 +124,16 @@ public class UserController {
 
 		return "displayUser";
 	}        
-	@RequestMapping(value = "/addNew", method = RequestMethod.GET) 
-	public String addNewSongwriter(ModelMap model) {  
-
-//		List<String> interests=new ArrayList<String>();
-//		interests.add("interest1");
-//		interests.add("interst2");
-//		user.setInterests(interests);	
-		model.addAttribute("user", user);		
-		return "addNewUser";
-	} 
+//	@RequestMapping(value = "/addNew", method = RequestMethod.GET) 
+//	public String addNewSongwriter(ModelMap model) {  
+//
+////		List<String> interests=new ArrayList<String>();
+////		interests.add("interest1");
+////		interests.add("interst2");
+////		user.setInterests(interests);	
+//		model.addAttribute("user", user);		
+//		return "addNewUser";
+//	} 
 	@RequestMapping(value = "/delete", method = RequestMethod.GET) 
 	public String deleteUser(ModelMap model) {   
 		Iterable <User> users=userJpaRepo.findAll();
@@ -148,24 +163,31 @@ public class UserController {
 		model.addAttribute("user", userModify);
 		return "modifyForm";	} 	
 	
-	@RequestMapping(value="/modify/id/{id}/password/{password}", method = RequestMethod.GET) 
+	//trying to get the validation messages to display, no success
+//	@RequestMapping(value = "/modify/id/{id}/password/{password}", method = RequestMethod.GET) 
+//	public ModelAndView modifyUGet(@PathVariable int id) {  
+//		User user = new User(); 
+//		return new ModelAndView("modifyForm", "user", user);
+//	} 
+//	
+	@RequestMapping(value={"/modify/id/{id}/password/{password}"},  method = RequestMethod.GET) 
 	public String modifyUser(@ModelAttribute("user") @PathVariable int id, @PathVariable String password,  
-			ModelMap model, @Valid User userModify,  
+			ModelMap model, @Valid User user,  
 			BindingResult result) {	
 		
 		if(result.hasErrors()){
-			userModify = userJpaRepo.findOne(id); 
-			model.addAttribute("user", userModify);
+			user = userJpaRepo.findOne(id); 
+			model.addAttribute("user", user);
 			return "modifyForm";
 		}
 		//userJpaRepo.updatePassword(id, password); 
-		User userM = userJpaRepo.findOne(id); 
-		userM.setPassword(password);
-		userJpaRepo.save(userM); 
+		user = userJpaRepo.findOne(id); 
+		user.setPassword(password);
+		userJpaRepo.save(user); 
 		model.addAttribute("message", "User with id "+ id +" has been modified");
-		model.addAttribute("userName", userM.getUserName());
-		model.addAttribute("password", userM.getPassword());
-		model.addAttribute("userId", userM.getUserId());
+		model.addAttribute("userName", user.getUserName());
+		model.addAttribute("password", user.getPassword());
+		model.addAttribute("userId", user.getUserId());
 		return "displayUser";		
 	}      
 //
