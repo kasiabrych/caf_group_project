@@ -1,5 +1,25 @@
 
 package ie.cit.caf;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.core.annotation.Order;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 import ie.cit.caf.config.DefaultConfig;
 import ie.cit.caf.domain.CHObject;
@@ -43,13 +63,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.annotation.Order;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 /*
  * author Kasia Brych (R00048777)
@@ -60,7 +88,7 @@ import org.springframework.boot.autoconfigure.security.SecurityProperties;
 @SpringBootApplication
 @ActiveProfiles ("default")
 @Import(DefaultConfig.class)
-public class GroupProjectApplication implements CommandLineRunner{
+public class GroupProjectApplication extends WebMvcConfigurerAdapter implements CommandLineRunner {
 
 	//ChoJpaRepo and ImagesJpaRepo to be replaced with service class
 	@Autowired
@@ -251,36 +279,37 @@ public class GroupProjectApplication implements CommandLineRunner{
 //		String why = "why is this not working"; 
 //		System.out.println(why);
 	}
-	@Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
-    protected static class ApplicationSecurity extends WebSecurityConfigurerAdapter {
+	 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
+	    protected static class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
-        @Autowired
-        private SecurityProperties security;
+	        @Autowired
+	        private SecurityProperties security;
 
-        @Override
-        protected void configure(HttpSecurity http) throws Exception {
-            http
-            .antMatchers("/","/hello").permitAll().anyRequest().authenticated()
-            .fullyAuthenticated().and().formLogin().loginPage("/login")
-            .failureUrl("/login?error").permitAll()
-            .and()
-            .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout");
-            ;
-        }
-        @Override
-        public void configure(AuthenticationManagerBuilder auth) throws Exception {
-            auth.inMemoryAuthentication().withUser("user").password("user").roles("USER");
-        }
-        
-        @Override
-        public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/login").setViewName("login");
-        }
-        
-        @Bean
-        public ApplicationSecurity applicationSecurity() {
-        return new ApplicationSecurity();
-        }
-    }
+	        @Override
+	        protected void configure(HttpSecurity http) throws Exception {
+	        	
+	        	  http
+	              .authorizeRequests().antMatchers("/","/hello").permitAll().anyRequest()
+	              .fullyAuthenticated().and().formLogin().loginPage("/login")
+	              .failureUrl("/login?error").permitAll()
+	              .and()
+	              .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/login?logout");
+	              ;
+	        	
+	        }
+	        @Override
+	        public void configure(AuthenticationManagerBuilder auth) throws Exception {
+	            auth.inMemoryAuthentication().withUser("user").password("user").roles("USER");
+	        }
+	    }
+	 @Override
+	    public void addViewControllers(ViewControllerRegistry registry) {
+	    registry.addViewController("/login").setViewName("login");
+	    }
+	    
+	    @Bean
+	    public ApplicationSecurity applicationSecurity() {
+	    return new ApplicationSecurity();
+	    }
 
 }
